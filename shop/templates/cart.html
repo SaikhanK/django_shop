@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<h1> Einkaufswagen </h1>
+    {% for item in allCartItems %}
+      <div class = overlay >
+      {{item.name}}
+        {{item.price}} €
+        <br>
+      {% if item.cartImage%}
+      <img src="{{item.cartImage.url}}" width=200>
+        <form action="{% url 'deleteCart' item.id %}" method="post" class="d-inline"> 
+        {% csrf_token %}
+          <button type="submit" > Delete </button>
+        </form>
+        <form action="{%url 'addAmount' item.id%}">
+          <button type="submit"> + </button>
+        </form>
+        <form action="{%url 'reduceAmount' item.id%}">
+          <button type="submit"> - </button>
+        </form>
+
+          {{item.amount}}
+      {% endif %}
+    </div>
+    {% endfor %}
+{%endblock content%}
+   
